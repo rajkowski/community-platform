@@ -389,7 +389,7 @@
            destdir="${build.classes.dir}"
            verbose="off"
            optimize="on"
-           source="1.5" target="1.5"
+           source="1.8" target="1.8"
            deprecation="off">
       <classpath>
         <path refid="web.classpath"/>
@@ -405,7 +405,7 @@
                destdir="${build.classes.dir}"
                verbose="off"
                optimize="on"
-               source="1.5" target="1.5"
+               source="1.8" target="1.8"
                deprecation="off">
           <classpath>
             <path refid="web.classpath"/>
@@ -664,7 +664,7 @@
     <javac srcdir="${dist.dir}/${project.war.finalName}/WEB-INF/src" excludes="**/*.smap"
            destdir="${dist.dir}/${project.war.finalName}/WEB-INF/compiled"
            debug="off" failonerror="true"
-           source="1.5" target="1.5"
+           source="1.8" target="1.8"
            optimize="on">
       <classpath>
         <pathelement location="${dist.dir}/${project.war.finalName}/WEB-INF/compiled"/>
@@ -700,9 +700,11 @@
     <delete dir="${dist.dir}/${project.war.finalName}/WEB-INF/src"/>
     <delete dir="${dist.dir}/${project.war.finalName}/WEB-INF/compiled"/>
     <!-- Compile the reports -->
+    <!--
     <compileJasperReport
       srcdir="${dist.dir}/${project.war.finalName}/WEB-INF/reports"
       destdir="${dist.dir}/${project.war.finalName}/WEB-INF/reports"/>
+    -->
     <!-- Archive the folder -->
     <war destfile="${dist.dir}/${project.war.finalName}.war"
          webxml="${dist.dir}/${project.war.finalName}/WEB-INF/web.xml"
@@ -783,9 +785,11 @@
       <fileset dir="${WEBAPP_EXPLODED_HOME}/WEB-INF/reports" includes="*.jasper"/>
     </delete>
     <!-- Compile the reports -->
+    <!--
     <compileJasperReport
       srcdir="${WEBAPP_EXPLODED_HOME}/WEB-INF/reports"
       destdir="${WEBAPP_EXPLODED_HOME}/WEB-INF/reports"/>
+    -->
   </target>
 
   <!-- Delete outdated files -->

@@ -112,7 +112,7 @@ public class WikiParserComplexTest extends AbstractConnectionPoolTest {
         "\n" +
         "=== Collaboration ===\n" +
         "\n" +
-        "With the complexity of today’s organizations, choosing the right tools to promote effective communication and collaboration is becoming even more crucial.\n" +
+        "With the complexity of today's organizations, choosing the right tools to promote effective communication and collaboration is becoming even more crucial.\n" +
         "\n" +
         "# Line 1\n" +
         "# Line 2\n" +

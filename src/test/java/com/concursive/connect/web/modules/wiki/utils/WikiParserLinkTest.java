@@ -105,7 +105,7 @@ public class WikiParserLinkTest extends AbstractConnectionPoolTest {
         "\n" +
         "=== How do I get it? ===\n" +
         "\n" +
-        "View our [[https://www.concursive.com/show/concourseconnect/wiki/Versions comparison chart]] to select the version of ConcourseConnect that’s right for you.\n" +
+        "View our [[https://www.concursive.com/show/concourseconnect/wiki/Versions comparison chart]] to select the version of ConcourseConnect that's right for you.\n" +
         "\n" +
         "[[Image:Screen shot 2010-02-04 at 1.59.16 PM.png|link=https://www.concursive.com/try-buy.shtml]]\n", wiki);
   }

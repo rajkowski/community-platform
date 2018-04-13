@@ -46,29 +46,12 @@
 
 package com.concursive.connect.web.modules.profile.jobs;
 
-import com.concursive.commons.text.StringUtils;
-import com.concursive.connect.config.ApplicationPrefs;
-import com.concursive.connect.scheduler.SchedulerUtils;
-import com.concursive.connect.web.modules.activity.dao.ProjectHistory;
-import com.concursive.connect.web.modules.activity.dao.ProjectHistoryList;
-import com.concursive.connect.web.modules.processes.dao.Process;
-import com.concursive.connect.web.modules.profile.dao.Project;
-import com.concursive.connect.web.modules.profile.dao.ProjectList;
-import com.concursive.connect.web.modules.wiki.utils.WikiLink;
-import com.concursive.connect.web.modules.wiki.utils.WikiUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.quartz.SchedulerContext;
 import org.quartz.StatefulJob;
-import twitter4j.Query;
-import twitter4j.QueryResult;
-import twitter4j.Tweet;
-import twitter4j.Twitter;
-
-import java.sql.Connection;
-import java.sql.Timestamp;
 
 /**
  * Responsible for querying twitter Api
@@ -87,6 +70,10 @@ public class TwitterQueryJob implements StatefulJob {
   }
 
   public void execute(JobExecutionContext context) throws JobExecutionException {
+
+    LOG.debug("This job is incompatible...");
+
+    /*
     long startTime = System.currentTimeMillis();
     LOG.debug("Starting job...");
     SchedulerContext schedulerContext = null;
@@ -188,5 +175,6 @@ public class TwitterQueryJob implements StatefulJob {
     } finally {
       SchedulerUtils.freeConnection(schedulerContext, db);
     }
+    */
   }
 }

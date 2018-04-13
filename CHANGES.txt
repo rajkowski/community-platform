@@ -1,4 +1,19 @@
 ----------------------------------------------------------------------------
+ConcourseConnect 2.0.4
+Change Log
+April 5, 2018
+----------------------------------------------------------------------------
+
+Updated for Java 8 and Tomcat 8.5. There are some issues to resolve so some
+features may not work or have been removed.
+
+  Fixed compile errors
+  Removed Twitter feature
+  Removed WebDAV feature
+  Removed JasperReports compilation
+
+
+----------------------------------------------------------------------------
 ConcourseConnect 2.0
 Copyright (C) 2012 Concursive Corporation.
 Change Log

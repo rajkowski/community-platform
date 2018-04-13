@@ -773,12 +773,13 @@ public class ResourceAttributes implements Attributes {
       attributes.addElement
           (new BasicAttribute(CONTENT_LENGTH,
               new Long(getContentLength())));
-      return new RecyclableNamingEnumeration(attributes);
+      //@todo determine a class to use here
+//      return new RecyclableNamingEnumeration(attributes);
+      return null;
     } else {
       return attributes.getAll();
     }
   }
-
 
   /**
    * Get all attribute IDs.
@@ -791,12 +792,13 @@ public class ResourceAttributes implements Attributes {
       attributeIDs.addElement(NAME);
       attributeIDs.addElement(TYPE);
       attributeIDs.addElement(CONTENT_LENGTH);
-      return new RecyclableNamingEnumeration(attributeIDs);
+      //@todo determine a class to use here
+//      return new RecyclableNamingEnumeration(attributeIDs);
+      return null;
     } else {
       return attributes.getIDs();
     }
   }
-
 
   /**
    * Retrieves the number of attributes in the attribute set.
