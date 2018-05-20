@@ -1,4 +1,16 @@
 ----------------------------------------------------------------------------
+ConcourseConnect 2.0.5
+Change Log
+May 20, 2018
+----------------------------------------------------------------------------
+
+Updated for Java 9. Driver updates, cleaned up unused setup screen.
+
+  Updated PostgreSQL driver to 10
+  Added RestEasy for /api services
+
+
+----------------------------------------------------------------------------
 ConcourseConnect 2.0.4
 Change Log
 April 5, 2018

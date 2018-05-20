@@ -45,7 +45,6 @@
  */
 package com.concursive.connect.web.modules.setup.actions;
 
-import com.concursive.commons.codec.PrivateString;
 import com.concursive.commons.db.ConnectionElement;
 import com.concursive.commons.db.DatabaseUtils;
 import com.concursive.commons.http.RequestUtils;
@@ -54,7 +53,6 @@ import com.concursive.commons.text.StringUtils;
 import com.concursive.commons.web.mvc.actions.ActionContext;
 import com.concursive.connect.Constants;
 import com.concursive.connect.config.ApplicationPrefs;
-import com.concursive.connect.config.ApplicationVersion;
 import com.concursive.connect.web.controller.actions.GenericAction;
 import com.concursive.connect.web.modules.api.dao.SyncTableList;
 import com.concursive.connect.web.modules.login.dao.User;
@@ -63,12 +61,10 @@ import com.concursive.connect.web.modules.profile.dao.Project;
 import com.concursive.connect.web.modules.profile.utils.ProjectUtils;
 import com.concursive.connect.web.modules.setup.beans.SetupDatabaseBean;
 import com.concursive.connect.web.modules.setup.beans.SetupDetailsBean;
-import com.concursive.connect.web.modules.setup.beans.SetupRegistrationBean;
 import com.concursive.connect.web.modules.setup.beans.SetupSiteBean;
 import com.concursive.connect.web.modules.setup.utils.SetupUtils;
 
 import java.io.File;
-import java.security.Key;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.Properties;
@@ -197,14 +193,6 @@ public final class Setup extends GenericAction {
           if (SetupUtils.isConfigured(getApplicationPrefs(context))) {
             return "ReloadOK";
           } else {
-            // Test to see if registration of services is enabled
-            try {
-              Class clientClass = Class.forName("com.concursive.connect.plugins.services.Client");
-              ObjectUtils.constructObject(clientClass);
-              context.getRequest().setAttribute("setupRegistration", "true");
-            } catch (Exception e) {
-              LOG.info("Services will be disabled");
-            }
             return "SetupSaveLibraryOK";
           }
         }
@@ -260,80 +248,6 @@ public final class Setup extends GenericAction {
       context.getRequest().setAttribute("actionError", "An error was reported trying to use the specified directory: " + e.getMessage());
     }
     return "SetupSaveLibraryERROR";
-  }
-
-  public String executeCommandRegistrationForm(ActionContext context) {
-    ApplicationPrefs prefs = getApplicationPrefs(context);
-    if (SetupUtils.isConfigured(prefs)) {
-      return "AlreadySetupOK";
-    }
-    if (SetupUtils.isServicesConfigured(prefs)) {
-      return "SaveRegistrationOK";
-    }
-    SetupRegistrationBean bean = (SetupRegistrationBean) context.getFormBean();
-    // If the form hasn't been seen by the user, make some assumptions
-    if (context.getRequest().getParameter("auto-populate") == null) {
-      bean.setSsl(true);
-      bean.setProfile(RequestUtils.getServerUrl(context.getRequest()));
-    }
-    bean.setOs(System.getProperty("os.name") + " " + System.getProperty("os.arch") + " " + System.getProperty("os.version"));
-    bean.setJava(System.getProperty("java.version"));
-    bean.setWebserver(context.getServletContext().getServerInfo());
-    return "SetupRegistrationFormOK";
-  }
-
-  public synchronized String executeCommandSaveRegistration(ActionContext context) {
-    ApplicationPrefs prefs = getApplicationPrefs(context);
-    if (SetupUtils.isConfigured(prefs)) {
-      return "AlreadySetupOK";
-    }
-    if (SetupUtils.isServicesConfigured(prefs)) {
-      return "SaveRegistrationOK";
-    }
-    // Populate the bean
-    SetupRegistrationBean bean = (SetupRegistrationBean) context.getFormBean();
-    // Validate the form
-    if (!bean.isValid()) {
-      LOG.warn("Registration bean did not validate");
-      processErrors(context, bean.getErrors());
-      return "SaveRegistrationERROR";
-    }
-    // Set system properties
-    bean.setOs(System.getProperty("os.name") + " " + System.getProperty("os.arch") + " " + System.getProperty("os.version"));
-    bean.setJava(System.getProperty("java.version"));
-    bean.setWebserver(context.getServletContext().getServerInfo());
-    // Set key for exchanging info
-    Key key = PrivateString.generateKey();
-    bean.setKey(PrivateString.encodeHex(key));
-    bean.setCode(PrivateString.encrypt(key, ApplicationVersion.TITLE + " " + ApplicationVersion.VERSION));
-    // Try to use the license client
-    boolean success = false;
-    try {
-      // Retrieve the services license
-      Class clientClass = Class.forName("com.concursive.connect.plugins.services.Client");
-      Object registrationClient = ObjectUtils.constructObject(clientClass);
-      success = ObjectUtils.invokeMethod(registrationClient, "processRegistration", bean);
-      if (success) {
-        prefs.add(ApplicationPrefs.CONCURSIVE_SERVICES_ID, bean.getId());
-        prefs.add(ApplicationPrefs.CONCURSIVE_SERVICES_KEY, bean.getKey());
-        // @note turned off by default now
-        //prefs.add(ApplicationPrefs.CONCURSIVE_SERVICES_SERVER, bean.getUrl());
-      }
-    } catch (ClassNotFoundException e) {
-      context.getRequest().setAttribute("actionError", "A registration component is missing");
-      LOG.error("registration error", e);
-      return "SaveRegistrationERROR";
-    } catch (Exception e) {
-      context.getRequest().setAttribute("actionError", "A connection error occurred: " + e.getMessage());
-      LOG.error("registration error", e);
-      return "SaveRegistrationERROR";
-    }
-    // Not sure why this value didn't get set
-    if (!success || !StringUtils.hasText(bean.getId())) {
-      context.getRequest().setAttribute("actionError", "An unspecified error occurred... try again?");
-      return "SaveRegistrationERROR";
-    }
-    return "SaveRegistrationOK";
   }
 
   public String executeCommandConfigureDatabase(ActionContext context) {

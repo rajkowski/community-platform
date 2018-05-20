@@ -84,12 +84,6 @@
     <forward name="SetupSaveLibraryERROR" resource="/Setup.do?command=ConfigureLibrary"/>
     <forward name="SetupCompleteOK" resource="/setup_complete.jsp"/>
   </action>
-  <action name="SetupRegistration" class="com.concursive.connect.web.modules.setup.actions.Setup" controller="setup/register">
-    <bean name="registrationBean" class="com.concursive.connect.web.modules.setup.beans.SetupRegistrationBean" scope="request"/>
-    <forward name="SetupRegistrationFormOK" resource="/setup_register.jsp"/>
-    <forward name="SaveRegistrationOK" resource="/setup_register_ok.jsp"/>
-    <forward name="SaveRegistrationERROR" resource="/SetupRegistration.do?command=RegistrationForm"/>
-  </action>
   <action name="SetupDatabase" class="com.concursive.connect.web.modules.setup.actions.Setup" controller="setup/database">
     <bean name="databaseBean" class="com.concursive.connect.web.modules.setup.beans.SetupDatabaseBean" scope="request"/>
     <forward name="AlreadySetupOK" resource="/setup_already.jsp"/>

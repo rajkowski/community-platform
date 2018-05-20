@@ -177,6 +177,7 @@ public class Constants {
   public static final String REQUEST_PAGE_DESCRIPTION_INCLUDE = "requestPageDescriptionInclude";
   public static final String REQUEST_TEMPLATE = "Template";
   public static final String REQUEST_COOKIE_BEAN_ARRAY = "requestCookieBeanArray";
+  public static final String REST_USER = "requestRestUser";
 
   // Global request parameter names
   public static final String REQUEST_PARAM_POPUP = "popup";

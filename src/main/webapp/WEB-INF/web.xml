@@ -46,6 +46,10 @@
   -->
 <web-app version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
   <display-name>ConcourseConnect</display-name>
+  <context-param>
+    <param-name>resteasy.servlet.mapping.prefix</param-name>
+    <param-value>/api</param-value>
+  </context-param>
   <listener>
     <listener-class>
       com.concursive.connect.web.listeners.ContextListener
@@ -60,9 +64,17 @@
     <filter-name>ClientTypeRequestFilter</filter-name>
     <filter-class>com.concursive.connect.web.filters.ClientTypeRequestFilter</filter-class>
   </filter>
+  <filter>
+    <filter-name>RestRequestFilter</filter-name>
+    <filter-class>com.concursive.connect.web.filters.RestRequestFilter</filter-class>
+  </filter>
   <filter-mapping>
     <filter-name>ClientTypeRequestFilter</filter-name>
     <url-pattern>/*</url-pattern>
+  </filter-mapping>
+  <filter-mapping>
+    <filter-name>RestRequestFilter</filter-name>
+    <url-pattern>/api/*</url-pattern>
   </filter-mapping>
   <!-- When a file is not specified -->
   <servlet>

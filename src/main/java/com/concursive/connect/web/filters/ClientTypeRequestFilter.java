@@ -85,17 +85,18 @@ public class ClientTypeRequestFilter implements Filter {
     // Determine if a client session is required
     if (requestedPath.startsWith("/api") || requestedPath.startsWith("/Process")) {
       // No need to track this client via a session
+      chain.doFilter(hsRequest, hsResponse);
+      return;
+    }
 
-    } else {
-      // Track information about the client
-      ClientType clientType = (ClientType) hsRequest.getSession().getAttribute(Constants.SESSION_CLIENT_TYPE);
-      if (clientType == null) {
-        clientType = new ClientType(hsRequest);
-        hsRequest.getSession().setAttribute(Constants.SESSION_CLIENT_TYPE, clientType);
-        LOG.debug("Created clientType");
-      } else if (clientType.getId() == -1) {
-        clientType.setParameters(hsRequest);
-      }
+    // Track information about the client
+    ClientType clientType = (ClientType) hsRequest.getSession().getAttribute(Constants.SESSION_CLIENT_TYPE);
+    if (clientType == null) {
+      clientType = new ClientType(hsRequest);
+      hsRequest.getSession().setAttribute(Constants.SESSION_CLIENT_TYPE, clientType);
+      LOG.debug("Created clientType");
+    } else if (clientType.getId() == -1) {
+      clientType.setParameters(hsRequest);
     }
     chain.doFilter(hsRequest, hsResponse);
   }

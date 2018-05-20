@@ -46,16 +46,8 @@
 <%@ taglib uri="/WEB-INF/concourseconnect-taglib.tld" prefix="ccp" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ include file="initPage.jsp" %>
-<c:choose>
-  <c:when test="${!empty setupRegistration}">
-    <c:set var="nextURL">${ctx}/SetupRegistration.do</c:set>
-    <c:set var="nextCommand">RegistrationForm</c:set>
-  </c:when>
-  <c:otherwise>
-    <c:set var="nextURL">${ctx}/SetupDatabase.do</c:set>
-    <c:set var="nextCommand">ConfigureDatabase</c:set>
-  </c:otherwise>
-</c:choose>
+<c:set var="nextURL">${ctx}/SetupDatabase.do</c:set>
+<c:set var="nextCommand">ConfigureDatabase</c:set>
 <form action="${nextURL}" name="setupForm" method="get" style="margin:0; width:100%; background:#efefef; ">
   <input type="hidden" name="command" value="${nextCommand}" />
   <div style="width:100%; height:100%; background:#efefef; padding:15px 0 0 0; margin:0">
